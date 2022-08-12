@@ -10,14 +10,14 @@
 
 <div class="row">
 <form @submit.prevent="updateSection" class="col-s12">
-<div class="col s3">
+<div class="col s4">
     <div class="input-field">
         <input disabled type="text" v-model="section_id" required>
          <span class="helper-text">Section ID#</span>
     </div>
    
 </div>
-<div class="col s3">
+<div class="col s4">
     <div class="input-field">
         <input disabled type="text" v-model="status" required>
          <span class="helper-text">Status</span>
@@ -26,27 +26,38 @@
 </div>
 
 <div class="row">
-    <div class="input-field col s3">
+    <div class="input-field col s4">
         <input disabled type="text" v-model="record" required>
          <span class="helper-text">Record #</span>
 
     </div>
 </div>
 
-<div class="row">
-    <div class="input-field col s9">
+<div class="col s4">
+    <div class="input-field">
         <input disabled type="text" v-model="section" required>
+         <span class="helper-text">Section</span>
+    </div>
+
+    
+
+</div>
+<div class="col s4">
+    <div class="input-field">
+        <input disabled type="text" v-model="stitle" required>
          <span class="helper-text">Title</span>
     </div>
 
 </div>
+
 <div class="row">
-    <div class="input-field col s9">
-        <input disabled type="text" v-model="stitle" required>
+    <div class="input-field col s4">
+        <input disabled type="text" v-model="name" required>
          <span class="helper-text">Name</span>
     </div>
 
 </div>
+
 <div class="row">
     <div class="input-field col s6">
           <p><label for="policyarea">Policy</label></p>
@@ -68,13 +79,28 @@
    
 </div>
 <div class="buttons">
-<router-link to="/" class ='btn grey'>Back</router-link>
+<div class="col">
+            <v-btn to="/"
+              color="grey"
+              dark
+            >
+              Back
+            </v-btn>
+          </div>
+          <div class="col">
+            <v-btn v-bind:to="{name:'edit-sections', params: {section_id: section_id}}" class="waves-effect waves-light btn red" 
+              
+              color="red"
+              dark
+            >
+            <i class= "fa fa-unlock"> </i>
+               Unlock
+            </v-btn>
+          </div>
 
 
 
-<router-link v-bind:to="{name: 'edit-sections', params: {section_id: section_id}}" class="waves-effect waves-light btn red">
-    <i class= "fa fa-unlock"></i> Unlock
-</router-link>
+
 </div>
 
 </form>
@@ -137,22 +163,25 @@ watch: {
 <style>
 
 
-.container {
+.containment {
     display: flex;
     justify-content: center;
+ 
 }
 
 #view-sections {
     text-align:center;
     justify-content: center;
-    width: 1000 px;
+  
 }
 
 form.col-s12 {
-    width: 900px;
-   padding-left: 175px;
+    width: 1200px;
+    margin-left: 200px;
+    padding-right: 200px;
+    margin-right: auto;
     text-align: center;
-    justify-content: center;
+  
 }
 
 textarea {
@@ -179,7 +208,14 @@ span {
 }
 
 .buttons {
-    padding-left: 200px;
+    padding-left: 350px;
+
 }
+
+i {
+    color: aliceblue;
+}
+
+
 
 </style>
