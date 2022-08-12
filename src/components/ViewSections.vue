@@ -59,25 +59,38 @@
 </div>
 
 <div class="row">
-    <div class="input-field col s6">
-          <p><label for="policyarea">Policy</label></p>
-  <textarea disabled id="policyarea" name="policyarea" rows="15" cols="30">{{policy}}</textarea>
-  <br>
-          
-         
+  
+    <div>
+    <v-tabs
+      v-model="active"
+      color="cyan"
+      slider-color="yellow"
+    >
+      <v-tab
+        v-for="n in 2"
+        :key="n"
+        ripple
+      >
+        Item {{ n }}
+
+      </v-tab>
+      <v-tab-item
+        v-for="n in 2"
+        :key="n"
+      >
+        <v-card flat>
+          <v-card-text>{{ policy }}</v-card-text>
+        </v-card>
+      </v-tab-item>
+    </v-tabs>
+
+    <div class="text-xs-center mt-3">
+      <v-btn @click="next">next tab</v-btn>
     </div>
-   
+  </div>
+
 </div>
-<div class="row">
-    <div class="input-field col s6">
-          <p><label for="modarea">Modification</label></p>
-  <textarea disabled id="modarea" name="modarea" rows="15" cols="30">{{modification}}</textarea>
-  <br>
-          
-         
-    </div>
-   
-</div>
+
 <div class="buttons">
 <div class="col">
             <v-btn to="/"
@@ -122,6 +135,7 @@ export default {
 name: 'view-sections',
 data () {
     return {
+        active: null,
      section_id: null,
      name: null,
      policy: null,
@@ -153,7 +167,13 @@ beforeRouteEnter(to, from, next) {
 },
 watch: {
     '$route': 'fetchData'
-}
+},
+methods: {
+      next () {
+        const active = parseInt(this.active)
+        this.active = (active < 2 ? active + 1 : 0)
+      }
+    }
 
 }
 
