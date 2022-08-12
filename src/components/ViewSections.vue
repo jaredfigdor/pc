@@ -67,13 +67,13 @@
       slider-color="yellow"
     >
       <v-tab
-       
+       @click="back"
        >
         Policy
 
       </v-tab>
          <v-tab
-       
+       @click="next"
        >
         modification
 
@@ -85,7 +85,15 @@
           
           <v-card-text>
 
-{{policy}}
+<div v-if="editor">
+<div class="tapbuttons">
+    <button class="btn bold" @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
+      bold
+    </button>
+
+    </div>
+  </div>
+  <editor-content :editor="editor" />
 
           </v-card-text>
           
@@ -101,7 +109,16 @@
           
           <v-card-text>
 
-{{modification}}
+<div v-if="editor">
+<div class="tapbuttons">
+    <button class="btn bold" @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
+      bold
+    </button>
+
+    </div>
+  </div>
+  
+  <editor-content :editor="editor" />
 
           </v-card-text>
           
@@ -156,6 +173,7 @@
 <script>
 import { Editor, EditorContent } from '@tiptap/vue-2'
 import StarterKit from '@tiptap/starter-kit'
+import Text from '@tiptap/extension-text'
 import db from './firebaseInit'
 import router from '../router'
 export default {
@@ -200,27 +218,13 @@ beforeRouteEnter(to, from, next) {
     })
     
 },
- watch: {
-    value(value) {
-      // HTML
-      const isSame = this.editor.getHTML() === value
-
-      // JSON
-      // const isSame = JSON.stringify(this.editor.getJSON()) === JSON.stringify(value)
-
-      if (isSame) {
-        return
-      }
-
-      this.editor.commands.setContent(value, false)
-    },
-  },
 mounted() {
     this.editor = new Editor({
       extensions: [
         StarterKit,
       ],
       content: this.policy,
+     
     })
   },
 
@@ -233,10 +237,37 @@ mounted() {
 
 methods: {
       next () {
-        const active = parseInt(this.active)
-        this.active = (active < 2 ? active + 1 : 0)
+    
+       this.editor.commands.setContent({
+  "type": "doc",
+  "content": [
+    {
+      "type": "text",
+      "text": this.modification
+      
+      }
+  ]
+})
+       
+        
+      },
+
+back () {
+
+       this.editor.commands.setContent({
+  "type": "doc",
+  "content": [
+    {
+      "type": "text",
+      "text": this.policy
+      
+      }
+  ]
+})
+       
         
       }
+
     }
 
 }
@@ -295,11 +326,25 @@ span {
     padding-left: 350px;
 
 }
+.btn {
+  border: 2px solid black;
+  background-color: white;
+  color: black;
+ 
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.success {
+  border-color: #04AA6D;
+  color: green;
+}
 
 i {
     color: aliceblue;
 }
-
+</style>
+<style lang="scss">
 .ProseMirror {
   > * + * {
     margin-top: 0.75em;
