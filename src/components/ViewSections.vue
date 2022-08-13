@@ -90,6 +90,12 @@
     <button class="btn bold" @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
       bold
     </button>
+     <button class="btn italic" @click="editor.chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }">
+      italic
+    </button>
+    <button class="btn strike" @click="editor.chain().focus().toggleStrike().run()" :class="{ 'is-active': editor.isActive('strike') }">
+      strike
+    </button>
 
     </div>
   </div>
@@ -113,6 +119,12 @@
 <div class="tapbuttons">
     <button class="btn bold" @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
       bold
+    </button>
+     <button class="btn italic" @click="editor.chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }">
+      italic
+    </button>
+    <button class="btn strike" @click="editor.chain().focus().toggleStrike().run()" :class="{ 'is-active': editor.isActive('strike') }">
+      strike
     </button>
 
     </div>
@@ -327,18 +339,87 @@ span {
 
 
 .buttons {
-    padding-left: 350px;
+    padding-left: 375px;
 
 }
-.btn {
-  border: 1px solid black;
+
+button.btn.bold {
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+    border: 1px solid black;
   border-radius: 5px;
-  width: 75px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+flex-direction: row;
+
   background-color: white;
   color: black;
  
   font-size: 14px;
   cursor: pointer;
+}
+
+button.btn.italic {
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+    border: 1px solid black;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+flex-direction: row;
+margin-left: 55px;
+margin-top: -20px;
+  background-color: white;
+  color: black;
+ 
+  font-size: 14px;
+  cursor: pointer;
+}
+button.btn.strike {
+padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+    border: 1px solid black;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+flex-direction: row;
+margin-left: 110px;
+margin-top: -20px;
+  background-color: white;
+  color: black;
+ width: 60px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn {
+  width: 50px;
+    height: 20px;
+ 
+ margin-bottom: 40px;
+
+ 
+
+}
+
+.tapbuttons {
+
+  margin-bottom: 10px;
 }
 
 .success {
