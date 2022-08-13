@@ -119,6 +119,7 @@
   </div>
   
   <editor-content :editor="editor" />
+ 
 
           </v-card-text>
           
@@ -316,22 +317,27 @@ label {
     font-weight: 700;
 }
 
+
 span {
     
     font-weight: 700;
     
 }
 
+
+
 .buttons {
     padding-left: 350px;
 
 }
 .btn {
-  border: 2px solid black;
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 75px;
   background-color: white;
   color: black;
  
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
 }
 
