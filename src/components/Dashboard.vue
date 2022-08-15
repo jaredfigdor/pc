@@ -33,11 +33,10 @@
             <v-list-item
               v-for="subItem in item.items"
               :key="item.section_id"
-              @click="showSection"
-              :to="{name: 'view-sections', params: {section_id: subItem.section_id}}"
+               v-bind:to="{name: 'view-sections', params: {section_id: subItem.section_id}}">
               
               
-            >
+            
               <v-list-item-content>
                 <v-list-item-title>{{subItem.stitle}}</v-list-item-title>
               </v-list-item-content>
@@ -135,7 +134,7 @@ methods: {
     },
        showSection (){
        
-     router.push({name: 'view-sections', params : {section_id: items.section_id}})
+     router.push({name: 'view-sections', params : {section_id: subItem.section_id}})
         
     }
 }

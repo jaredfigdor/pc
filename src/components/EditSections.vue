@@ -12,14 +12,14 @@
 <form @submit.prevent="updateSection" class="col-s12">
 <div class="col s4">
     <div class="input-field">
-        <input disabled type="text" v-model="section_id" required>
+        <input  type="text" v-model="section_id" required>
          <span class="helper-text">Section ID#</span>
     </div>
    
 </div>
 <div class="col s4">
     <div class="input-field">
-        <input disabled type="text" v-model="status" required>
+        <input  type="text" v-model="status" required>
          <span class="helper-text">Status</span>
     </div>
    
@@ -27,7 +27,7 @@
 
 <div class="row">
     <div class="input-field col s4">
-        <input disabled type="text" v-model="record" required>
+        <input  type="text" v-model="record" required>
          <span class="helper-text">Record #</span>
 
     </div>
@@ -35,7 +35,7 @@
 
 <div class="col s4">
     <div class="input-field">
-        <input disabled type="text" v-model="section" required>
+        <input  type="text" v-model="section" required>
          <span class="helper-text">Section</span>
     </div>
 
@@ -44,7 +44,7 @@
 </div>
 <div class="col s4">
     <div class="input-field">
-        <input disabled type="text" v-model="stitle" required>
+        <input  type="text" v-model="stitle" required>
          <span class="helper-text">Title</span>
     </div>
 
@@ -52,7 +52,7 @@
 
 <div class="row">
     <div class="input-field col s4">
-        <input disabled type="text" v-model="name" required>
+        <input  type="text" v-model="name" required>
          <span class="helper-text">Name</span>
     </div>
 
@@ -75,7 +75,7 @@
          <v-tab
        @click="next"
        >
-        modification
+        Modification
 
       </v-tab>
       <v-tab-item
@@ -127,8 +127,7 @@
           
           <v-card-text>
 
-<div v-if="editor"
-editable: false>
+<div v-if="editor">
 <div class="tapbuttons">
        <button class="btn bold" @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
       <i class="fa-solid fa-bold"></i>
@@ -175,7 +174,7 @@ editable: false>
 
 <div class="buttons">
 <div class="col">
-            <v-btn to="/"
+            <v-btn to="/:section_id"
               color="grey"
               dark
             >
@@ -185,12 +184,12 @@ editable: false>
           <div class="col">
             <v-btn  
               
-              color="red"
+              color="green"
               dark
-              v-bind:to="{name: 'edit-sections', params: {section_id}}"
+              type="submit"
             >
             <i class= "fa fa-unlock"> </i>
-               Unlock
+               Save
             </v-btn>
           </div>
 
@@ -233,6 +232,7 @@ data () {
      policy: null,
      section: null,
      status: null,
+     islocked: null,
      stitle: null,
      record: null,
      modification: null
@@ -257,6 +257,11 @@ beforeRouteEnter(to, from, next) {
     })
     
 },
+
+watch: {
+    '$route': 'fetchData'
+},
+
 mounted() {
     this.editor = new Editor({
       extensions: [
@@ -306,10 +311,57 @@ back () {
        
         
       },
-          editSection (){
-       
-     router.push({name: 'edit-sections', params : {section_id}})
-        
+
+      fetchData () {
+        db.collection('volumes').where('section_id', '==', this.$route.params.section_id).get()
+        .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+               
+                this.section_id = doc.data().section_id
+                this.name = doc.data().name
+                this.section = doc.data().section
+                this.status = doc.data().status
+                this.stitle = doc.data().stitle
+                this.policy = doc.data().policy
+                this.record = doc.data().record
+                this.islocked = doc.data().islocked
+                this.modification = doc.data().modification
+                
+            
+            })
+        })
+    },
+    updateSection () {
+        db.collection('volumes').where('section_id', '==', this.$route.params.section_id).get()
+        .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              doc.ref.update({
+                section_id: this.section_id,
+                name: this.name ,
+                policy: this.section,
+                status: this.status ,
+                stitle: this.stitle,
+                policy: this.policy,
+                islocked: this.islocked,
+                record: this.record,
+                modification: this.modification
+              })
+              .then(() => {
+                this.$router.push({name: 'home', params: {section_id: this.section_id}})
+              })
+            })
+        })
+    },
+       deleteSection (){
+        if(confirm('Are you sure')){
+        db.collection('volumes').where('section_id', '==', this.$route.params.section_id).get()
+        .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+                doc.ref.delete()
+                this.$router.push('/')
+            })
+        })
+        }
     }
 
     }
