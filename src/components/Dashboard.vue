@@ -38,7 +38,7 @@
               
             
               <v-list-item-content>
-                <v-list-item-title>{{subItem.stitle}}</v-list-item-title>
+                <v-list-item-title>{{subItem.sectiontitle}}</v-list-item-title>
               </v-list-item-content>
 
          
@@ -67,7 +67,7 @@ import router from '../router'
      section: null,
      status: null,
      record: null,
-     stitle: null,
+     sectiontitle: null,
      islocked: null,
         volume1: [],
         items: [
@@ -97,7 +97,7 @@ created () {
                 'section': doc.data().section,
                 'islocked': doc.data().islocked,
                 'section_id': doc.data().section_id,
-                'stitle': doc.data().stitle,
+                'sectiontitle': doc.data().sectiontitle,
                 'policy' : doc.data().policy,
                 'modification' : doc.data().modification
             }
@@ -122,7 +122,7 @@ methods: {
                 this.name = doc.data().name
                 this.section = doc.data().section
                 this.status = doc.data().status
-                this.stitle = doc.data().stitle
+                this.sectiontitle = doc.data().sectiontitle
                 this.policy = doc.data().policy
                 this.record = doc.data().record
                 this.islocked = doc.data().islocked

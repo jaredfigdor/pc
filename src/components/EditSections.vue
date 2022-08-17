@@ -2,7 +2,7 @@
 <div class="containment">
 <div id ="view-sections">
 
-    <h5>  Section {{this.section_id}} : {{this.stitle}}
+    <h5>  Section {{this.section_id}} : {{this.sectiontitle}}
 
 
 
@@ -11,48 +11,48 @@
 <div class="row">
 <form @submit.prevent="updateSection" class="col-s12">
 <div class="col s4">
-    <div class="input-field">
-        <input  type="text" v-model="section_id" required>
+    
+        <v-text-field  type="text" v-model="section_id" required></v-text-field>
          <span class="helper-text">Section ID#</span>
-    </div>
+   
    
 </div>
 <div class="col s4">
-    <div class="input-field">
-        <input  type="text" v-model="status" required>
+    
+        <v-text-field input type="text" v-model="status" required></v-text-field>
          <span class="helper-text">Status</span>
-    </div>
+    
    
 </div>
 
 <div class="row">
-    <div class="input-field col s4">
-        <input  type="text" v-model="record" required>
+    <div class="col s4">
+        <v-text-field  type="text" v-model="record" required></v-text-field>
          <span class="helper-text">Record #</span>
 
     </div>
 </div>
 
 <div class="col s4">
-    <div class="input-field">
-        <input  type="text" v-model="section" required>
+    
+        <v-text-field  type="text" v-model="section" required></v-text-field>
          <span class="helper-text">Section</span>
-    </div>
+    
 
     
 
 </div>
 <div class="col s4">
-    <div class="input-field">
-        <input  type="text" v-model="stitle" required>
+    
+        <v-text-field  type="text" v-model="sectiontitle" required></v-text-field>
          <span class="helper-text">Title</span>
-    </div>
+    
 
 </div>
 
 <div class="row">
-    <div class="input-field col s4">
-        <input  type="text" v-model="name" required>
+    <div class="col s4">
+        <v-text-field  type="text" v-model="name" required></v-text-field>
          <span class="helper-text">Name</span>
     </div>
 
@@ -87,19 +87,19 @@
 
 <div v-if="editor">
 <div class="tapbuttons">
-    <button class="btn bold" @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
+    <button class="btn bold" @click="editor.chain().focus().toggleBold().run()">
       <i class="fa-solid fa-bold"></i>
     </button>
-     <button class="btn italic" @click="editor.chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }">
+     <button class="btn italic" @click="editor.chain().focus().toggleItalic().run()">
     <i class="fa-solid fa-italic fa-1x"></i>
     </button>
-    <button class="btn strike" @click="editor.chain().focus().toggleStrike().run()" :class="{ 'is-active': editor.isActive('strike') }">
+    <button class="btn strike" @click="editor.chain().focus().toggleStrike().run()">
       <i class="fa-solid fa-strikethrough"></i>
     </button>
-      <button class="btn listb" @click="editor.chain().focus().toggleBulletList().run()" :class="{ 'is-active': editor.isActive('bulletList') }">
+      <button class="btn listb" @click="editor.chain().focus().toggleBulletList().run()">
       <i class="fa-solid fa-list-ul"></i>
     </button>
-    <button class="btn listn" @click="editor.chain().focus().toggleOrderedList().run()" :class="{ 'is-active': editor.isActive('orderedList') }">
+    <button class="btn listn" @click="editor.chain().focus().toggleOrderedList().run()">
       <i class="fa-solid fa-list-ol"></i>
     </button>
   <button class="btn undo" @click="editor.chain().focus().undo().run()">
@@ -129,22 +129,22 @@
 
 <div v-if="editor">
 <div class="tapbuttons">
-       <button class="btn bold" @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
+    <button class="btn bold" @click="editor.chain().focus().toggleBold().run()">
       <i class="fa-solid fa-bold"></i>
     </button>
-     <button class="btn italic" @click="editor.chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }">
+     <button class="btn italic" @click="editor.chain().focus().toggleItalic().run()">
     <i class="fa-solid fa-italic fa-1x"></i>
     </button>
-    <button class="btn strike" @click="editor.chain().focus().toggleStrike().run()" :class="{ 'is-active': editor.isActive('strike') }">
+    <button class="btn strike" @click="editor.chain().focus().toggleStrike().run()">
       <i class="fa-solid fa-strikethrough"></i>
     </button>
-      <button class="btn listb" @click="editor.chain().focus().toggleBulletList().run()" :class="{ 'is-active': editor.isActive('bulletList') }">
+      <button class="btn listb" @click="editor.chain().focus().toggleBulletList().run()">
       <i class="fa-solid fa-list-ul"></i>
     </button>
-    <button class="btn listn" @click="editor.chain().focus().toggleOrderedList().run()" :class="{ 'is-active': editor.isActive('orderedList') }">
+    <button class="btn listn" @click="editor.chain().focus().toggleOrderedList().run()">
       <i class="fa-solid fa-list-ol"></i>
     </button>
-    <button class="btn undo" @click="editor.chain().focus().undo().run()">
+  <button class="btn undo" @click="editor.chain().focus().undo().run()">
       <i class="fa-solid fa-rotate-left"></i>
     </button>
     <button class="btn redo" @click="editor.chain().focus().redo().run()">
@@ -174,7 +174,7 @@
 
 <div class="buttons">
 <div class="col">
-            <v-btn to="/:section_id"
+            <v-btn to="/"
               color="grey"
               dark
             >
@@ -233,7 +233,7 @@ data () {
      section: null,
      status: null,
      islocked: null,
-     stitle: null,
+     sectiontitle: null,
      record: null,
      modification: null
     }
@@ -247,7 +247,7 @@ beforeRouteEnter(to, from, next) {
                 vm.name = doc.data().name
                 vm.section = doc.data().section
                 vm.status = doc.data().status
-                vm.stitle = doc.data().stitle
+                vm.sectiontitle = doc.data().sectiontitle
                 vm.policy = doc.data().policy
                 vm.record = doc.data().record
                 vm.modification = doc.data().modification
@@ -321,7 +321,7 @@ back () {
                 this.name = doc.data().name
                 this.section = doc.data().section
                 this.status = doc.data().status
-                this.stitle = doc.data().stitle
+                this.sectiontitle = doc.data().sectiontitle
                 this.policy = doc.data().policy
                 this.record = doc.data().record
                 this.islocked = doc.data().islocked
@@ -340,11 +340,12 @@ back () {
                 name: this.name ,
                 policy: this.section,
                 status: this.status ,
-                stitle: this.stitle,
+                sectiontitle: this.sectiontitle,
                 policy: this.policy,
                 islocked: this.islocked,
                 record: this.record,
-                modification: this.modification
+                modification: this.modification,
+                section: this.section
               })
               .then(() => {
                 this.$router.push({name: 'home', params: {section_id: this.section_id}})
