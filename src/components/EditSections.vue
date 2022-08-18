@@ -63,8 +63,8 @@
     <div>
     <v-tabs
       v-model="active"
-      color="cyan"
-      slider-color="yellow"
+      color="blue"
+      slider-color="blue"
     >
       <v-tab
       

@@ -64,7 +64,7 @@
     <v-tabs
       v-model="active"
       color="blue"
-      slider-color="green"
+      slider-color="blue"
     >
       <v-tab
     
@@ -87,27 +87,7 @@
 
 <div v-if="editorPolicy">
 <div class="tapbuttons">
-    <button class="btn bold" @click="editor.chain().focus().toggleBold().run()">
-      <i class="fa-solid fa-bold"></i>
-    </button>
-     <button class="btn italic" @click="editor.chain().focus().toggleItalic().run()">
-    <i class="fa-solid fa-italic fa-1x"></i>
-    </button>
-    <button class="btn strike" @click="editor.chain().focus().toggleStrike().run()">
-      <i class="fa-solid fa-strikethrough"></i>
-    </button>
-      <button class="btn listb" @click="editor.chain().focus().toggleBulletList().run()">
-      <i class="fa-solid fa-list-ul"></i>
-    </button>
-    <button class="btn listn" @click="editor.chain().focus().toggleOrderedList().run()">
-      <i class="fa-solid fa-list-ol"></i>
-    </button>
-  <button class="btn undo" @click="editor.chain().focus().undo().run()">
-      <i class="fa-solid fa-rotate-left"></i>
-    </button>
-    <button class="btn redo" @click="editor.chain().focus().redo().run()">
-      <i class="fa-solid fa-rotate-right"></i>
-    </button>
+
 
     </div>
   </div>
@@ -130,27 +110,7 @@
 <div v-if="editorMod"
 editable: false>
 <div class="tapbuttons">
-    <button class="btn bold" @click="editor.chain().focus().toggleBold().run()">
-      <i class="fa-solid fa-bold"></i>
-    </button>
-     <button class="btn italic" @click="editor.chain().focus().toggleItalic().run()">
-    <i class="fa-solid fa-italic fa-1x"></i>
-    </button>
-    <button class="btn strike" @click="editor.chain().focus().toggleStrike().run()">
-      <i class="fa-solid fa-strikethrough"></i>
-    </button>
-      <button class="btn listb" @click="editor.chain().focus().toggleBulletList().run()">
-      <i class="fa-solid fa-list-ul"></i>
-    </button>
-    <button class="btn listn" @click="editor.chain().focus().toggleOrderedList().run()">
-      <i class="fa-solid fa-list-ol"></i>
-    </button>
-  <button class="btn undo" @click="editor.chain().focus().undo().run()">
-      <i class="fa-solid fa-rotate-left"></i>
-    </button>
-    <button class="btn redo" @click="editor.chain().focus().redo().run()">
-      <i class="fa-solid fa-rotate-right"></i>
-    </button>
+
 
     </div>
   </div>
