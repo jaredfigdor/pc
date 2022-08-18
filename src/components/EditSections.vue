@@ -216,7 +216,7 @@ import db from './firebaseInit'
 import router from '../router'
 export default {
 components: {EditorContent,},
-name: 'view-sections',
+name: 'edit-sections',
  props: {
     value: {
       type: String,

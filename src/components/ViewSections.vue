@@ -63,8 +63,8 @@
     <div>
     <v-tabs
       v-model="active"
-      color="cyan"
-      slider-color="yellow"
+      color="blue"
+      slider-color="green"
     >
       <v-tab
     
@@ -187,7 +187,7 @@ editable: false>
               
               color="red"
               dark
-              v-bind:to="{name: 'edit-sections', params: {section_id : this.section_id}}"
+              type="submit"
             >
             <i class= "fa fa-unlock"> </i>
                Unlock
@@ -305,7 +305,7 @@ methods: {
 
           updateSection (){
        
-     router.push({name: 'edit-sections', params : {section_id : this.section_id}})
+     router.push({name: 'edit-sections', params : {section_id: this.section_id}})
         
     }
 
