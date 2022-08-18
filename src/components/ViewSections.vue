@@ -67,13 +67,13 @@
       slider-color="yellow"
     >
       <v-tab
-       @click="back"
+    
        >
         Policy
 
       </v-tab>
          <v-tab
-       @click="next"
+     
        >
         modification
 
@@ -85,7 +85,7 @@
           
           <v-card-text>
 
-<div v-if="editor">
+<div v-if="editorPolicy">
 <div class="tapbuttons">
     <button class="btn bold" @click="editor.chain().focus().toggleBold().run()">
       <i class="fa-solid fa-bold"></i>
@@ -111,7 +111,7 @@
 
     </div>
   </div>
-  <editor-content :editor="editor" />
+  <editor-content :editor="editorPolicy" />
 
           </v-card-text>
           
@@ -127,7 +127,7 @@
           
           <v-card-text>
 
-<div v-if="editor"
+<div v-if="editorMod"
 editable: false>
 <div class="tapbuttons">
     <button class="btn bold" @click="editor.chain().focus().toggleBold().run()">
@@ -155,7 +155,7 @@ editable: false>
     </div>
   </div>
   
-  <editor-content :editor="editor" />
+  <editor-content :editor="editorMod" />
  
 
           </v-card-text>
@@ -187,7 +187,7 @@ editable: false>
               
               color="red"
               dark
-              v-bind:to="{name: 'edit-sections', params: {section_id}}"
+              v-bind:to="{name: 'edit-sections', params: {section_id : this.section_id}}"
             >
             <i class= "fa fa-unlock"> </i>
                Unlock
@@ -231,6 +231,8 @@ data () {
      section_id: null,
      name: null,
      policy: null,
+     editorMod: null,
+     editorPolicy: null,
      section: null,
      status: null,
      sectiontitle: null,
@@ -257,12 +259,20 @@ beforeRouteEnter(to, from, next) {
     })
     
 },
-mounted() {
-    this.editor = new Editor({
+  mounted() {
+    this.editorPolicy = new Editor({
       extensions: [
         StarterKit,
       ],
       content: this.policy,
+     
+    })
+
+        this.editorMod = new Editor({
+      extensions: [
+        StarterKit,
+      ],
+      content: this.modification,
      
     })
   },
@@ -272,43 +282,30 @@ mounted() {
   },
 
 
-
+watch: {
+    '$route': 'fetchData'
+},
 
 methods: {
-      next () {
-    
-       this.editor.commands.setContent({
-  "type": "doc",
-  "content": [
-    {
-      "type": "text",
-      "text": this.modification
-      
-      }
-  ]
-})
-       
-        
-      },
+      fetchData () {
+        db.collection('volumes').where('section_id', '==', this.$route.params.section_id).get()
+        .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+                this.section_id = doc.data().section_id
+                this.name = doc.data().name
+                this.section = doc.data().section
+                this.status = doc.data().status
+                this.title = doc.data().title
+                this.policy = doc.data().policy
+                this.record = doc.data().record
+                this.modification = doc.data().modification
+            })
+        })
+    },
 
-back () {
-
-       this.editor.commands.setContent({
-  "type": "doc",
-  "content": [
-    {
-      "type": "text",
-      "text": this.policy
-      
-      }
-  ]
-})
+          updateSection (){
        
-        
-      },
-          editSection (){
-       
-     router.push({name: 'edit-sections', params : {section_id}})
+     router.push({name: 'edit-sections', params : {section_id : this.section_id}})
         
     }
 

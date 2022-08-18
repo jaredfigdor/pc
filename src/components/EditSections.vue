@@ -67,13 +67,13 @@
       slider-color="yellow"
     >
       <v-tab
-       @click="back"
+      
        >
         Policy
 
       </v-tab>
          <v-tab
-       @click="next"
+     
        >
         Modification
 
@@ -85,9 +85,9 @@
           
           <v-card-text>
 
-<div v-if="editor">
+<div v-if="editorPolicy">
 <div class="tapbuttons">
-    <button class="btn bold" @click="editor.chain().focus().toggleBold().run()">
+    <button class="btn bold" @click="editorPolicy.chain().focus().toggleBold().run()">
       <i class="fa-solid fa-bold"></i>
     </button>
      <button class="btn italic" @click="editor.chain().focus().toggleItalic().run()">
@@ -111,7 +111,7 @@
 
     </div>
   </div>
-  <editor-content :editor="editor" />
+  <editor-content :editor="editorPolicy" />
 
           </v-card-text>
           
@@ -127,7 +127,7 @@
           
           <v-card-text>
 
-<div v-if="editor">
+<div v-if="editorMod">
 <div class="tapbuttons">
     <button class="btn bold" @click="editor.chain().focus().toggleBold().run()">
       <i class="fa-solid fa-bold"></i>
@@ -154,7 +154,7 @@
     </div>
   </div>
   
-  <editor-content :editor="editor" />
+  <editor-content :editor="editorMod" />
  
 
           </v-card-text>
@@ -230,6 +230,8 @@ data () {
      section_id: null,
      name: null,
      policy: null,
+       editorMod: null,
+     editorPolicy: null,
      section: null,
      status: null,
      islocked: null,
@@ -258,16 +260,21 @@ beforeRouteEnter(to, from, next) {
     
 },
 
-watch: {
-    '$route': 'fetchData'
-},
 
-mounted() {
-    this.editor = new Editor({
+  mounted() {
+    this.editorPolicy = new Editor({
       extensions: [
         StarterKit,
       ],
       content: this.policy,
+     
+    })
+
+        this.editorMod = new Editor({
+      extensions: [
+        StarterKit,
+      ],
+      content: this.modification,
      
     })
   },
@@ -280,57 +287,8 @@ mounted() {
 
 
 methods: {
-      next () {
-    
-       this.editor.commands.setContent({
-  "type": "doc",
-  "content": [
-    {
-      "type": "text",
-      "text": this.modification
-      
-      }
-  ]
-})
-       
-        
-      },
 
-back () {
-
-       this.editor.commands.setContent({
-  "type": "doc",
-  "content": [
-    {
-      "type": "text",
-      "text": this.policy
-      
-      }
-  ]
-})
-       
-        
-      },
-
-      fetchData () {
-        db.collection('volumes').where('section_id', '==', this.$route.params.section_id).get()
-        .then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-               
-                this.section_id = doc.data().section_id
-                this.name = doc.data().name
-                this.section = doc.data().section
-                this.status = doc.data().status
-                this.sectiontitle = doc.data().sectiontitle
-                this.policy = doc.data().policy
-                this.record = doc.data().record
-                this.islocked = doc.data().islocked
-                this.modification = doc.data().modification
-                
-            
-            })
-        })
-    },
+ 
     updateSection () {
         db.collection('volumes').where('section_id', '==', this.$route.params.section_id).get()
         .then(querySnapshot => {
