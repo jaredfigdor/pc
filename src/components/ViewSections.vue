@@ -1,13 +1,15 @@
 <template>
 <div class="containment">
 <div id ="view-sections">
+<div class="titlew">
 
-    <h5>  Section {{this.section_id}} : {{this.sectiontitle}}
+
+    <h5 class="solid">  Section {{this.section_id}} - {{this.sectiontitle}}
 
 
 
     </h5>
-
+</div>
 <div class="row">
 <form @submit.prevent="updateSection" class="col-s12">
 <div class="col s4">
@@ -280,6 +282,14 @@ methods: {
 </script>
 
 <style>
+
+h5 {
+  font-weight: 300;
+  padding-top: 10px;
+
+
+}
+
 
 
 .containment {

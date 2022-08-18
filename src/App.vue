@@ -4,6 +4,7 @@
       app
       color="primary"
       dark
+      class="elevation-0"
     >
     <div class="wrapflex">
       <div class="d-flex align-center">
@@ -45,6 +46,9 @@ font-size: 25px;
 
 }
 
+.v-app-bar {
+  box-shadow: none;
+}
 
 
 
