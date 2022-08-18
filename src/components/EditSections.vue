@@ -9,7 +9,7 @@
     </h5>
 
 <div class="row">
-<form @submit.prevent="updateSection" class="col-s12">
+<form class="col-s12">
 <div class="col s4">
     
         <v-text-field  type="text" v-model="section_id" required></v-text-field>
@@ -63,8 +63,8 @@
     <div>
     <v-tabs
       v-model="active"
-      color="cyan"
-      slider-color="yellow"
+      color="blue"
+      slider-color="blue"
     >
       <v-tab
       
@@ -90,22 +90,22 @@
     <button class="btn bold" @click="editorPolicy.chain().focus().toggleBold().run()">
       <i class="fa-solid fa-bold"></i>
     </button>
-     <button class="btn italic" @click="editor.chain().focus().toggleItalic().run()">
+     <button class="btn italic" @click="editorPolicy.chain().focus().toggleItalic().run()">
     <i class="fa-solid fa-italic fa-1x"></i>
     </button>
-    <button class="btn strike" @click="editor.chain().focus().toggleStrike().run()">
+    <button class="btn strike" @click="editorPolicy.chain().focus().toggleStrike().run()">
       <i class="fa-solid fa-strikethrough"></i>
     </button>
-      <button class="btn listb" @click="editor.chain().focus().toggleBulletList().run()">
+      <button class="btn listb" @click="editorPolicy.chain().focus().toggleBulletList().run()">
       <i class="fa-solid fa-list-ul"></i>
     </button>
-    <button class="btn listn" @click="editor.chain().focus().toggleOrderedList().run()">
+    <button class="btn listn" @click="editorPolicy.chain().focus().toggleOrderedList().run()">
       <i class="fa-solid fa-list-ol"></i>
     </button>
-  <button class="btn undo" @click="editor.chain().focus().undo().run()">
+  <button class="btn undo" @click="editorPolicy.chain().focus().undo().run()">
       <i class="fa-solid fa-rotate-left"></i>
     </button>
-    <button class="btn redo" @click="editor.chain().focus().redo().run()">
+    <button class="btn redo" @click="editorPolicy.chain().focus().redo().run()">
       <i class="fa-solid fa-rotate-right"></i>
     </button>
 
@@ -129,25 +129,25 @@
 
 <div v-if="editorMod">
 <div class="tapbuttons">
-    <button class="btn bold" @click="editor.chain().focus().toggleBold().run()">
+    <button class="btn bold" @click="editorMod.chain().focus().toggleBold().run()">
       <i class="fa-solid fa-bold"></i>
     </button>
-     <button class="btn italic" @click="editor.chain().focus().toggleItalic().run()">
+     <button class="btn italic" @click="editorMod.chain().focus().toggleItalic().run()">
     <i class="fa-solid fa-italic fa-1x"></i>
     </button>
-    <button class="btn strike" @click="editor.chain().focus().toggleStrike().run()">
+    <button class="btn strike" @click="editorMod.chain().focus().toggleStrike().run()">
       <i class="fa-solid fa-strikethrough"></i>
     </button>
-      <button class="btn listb" @click="editor.chain().focus().toggleBulletList().run()">
+      <button class="btn listb" @click="editorMod.chain().focus().toggleBulletList().run()">
       <i class="fa-solid fa-list-ul"></i>
     </button>
-    <button class="btn listn" @click="editor.chain().focus().toggleOrderedList().run()">
+    <button class="btn listn" @click="editorMod.chain().focus().toggleOrderedList().run()">
       <i class="fa-solid fa-list-ol"></i>
     </button>
-  <button class="btn undo" @click="editor.chain().focus().undo().run()">
+  <button class="btn undo" @click="editorMod.chain().focus().undo().run()">
       <i class="fa-solid fa-rotate-left"></i>
     </button>
-    <button class="btn redo" @click="editor.chain().focus().redo().run()">
+    <button class="btn redo" @click="editorMod.chain().focus().redo().run()">
       <i class="fa-solid fa-rotate-right"></i>
     </button>
 
@@ -186,7 +186,7 @@
               
               color="green"
               dark
-              type="submit"
+              @click="updateSection"
             >
             <i class= "fa fa-unlock"> </i>
                Save
@@ -214,9 +214,10 @@ import StarterKit from '@tiptap/starter-kit'
 import Text from '@tiptap/extension-text'
 import db from './firebaseInit'
 import router from '../router'
+
 export default {
 components: {EditorContent,},
-name: 'view-sections',
+name: 'edit-sections',
  props: {
     value: {
       type: String,
@@ -229,7 +230,7 @@ data () {
         active: null,
      section_id: null,
      name: null,
-     policy: null,
+     policy: '',
        editorMod: null,
      editorPolicy: null,
      section: null,
@@ -261,12 +262,14 @@ beforeRouteEnter(to, from, next) {
 },
 
 
-  mounted() {
+  async mounted() {
     this.editorPolicy = new Editor({
+      
       extensions: [
         StarterKit,
       ],
       content: this.policy,
+    
      
     })
 
@@ -281,6 +284,7 @@ beforeRouteEnter(to, from, next) {
 
   beforeUnmount() {
     this.editor.destroy()
+
   },
 
 
@@ -290,20 +294,22 @@ methods: {
 
  
     updateSection () {
+      const html = this.editorPolicy.getHTML()
+      const htmltwo = this.editorMod.getHTML()
         db.collection('volumes').where('section_id', '==', this.$route.params.section_id).get()
         .then(querySnapshot => {
             querySnapshot.forEach(doc => {
               doc.ref.update({
                 section_id: this.section_id,
-                name: this.name ,
-                policy: this.section,
+                name: this.name,
+                section: this.section,
                 status: this.status ,
                 sectiontitle: this.sectiontitle,
-                policy: this.policy,
+                policy: html,
                 islocked: this.islocked,
                 record: this.record,
-                modification: this.modification,
-                section: this.section
+                modification: htmltwo
+         
               })
               .then(() => {
                 this.$router.push({name: 'home', params: {section_id: this.section_id}})

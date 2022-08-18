@@ -63,8 +63,8 @@
     <div>
     <v-tabs
       v-model="active"
-      color="cyan"
-      slider-color="yellow"
+      color="blue"
+      slider-color="blue"
     >
       <v-tab
     
@@ -87,27 +87,7 @@
 
 <div v-if="editorPolicy">
 <div class="tapbuttons">
-    <button class="btn bold" @click="editor.chain().focus().toggleBold().run()">
-      <i class="fa-solid fa-bold"></i>
-    </button>
-     <button class="btn italic" @click="editor.chain().focus().toggleItalic().run()">
-    <i class="fa-solid fa-italic fa-1x"></i>
-    </button>
-    <button class="btn strike" @click="editor.chain().focus().toggleStrike().run()">
-      <i class="fa-solid fa-strikethrough"></i>
-    </button>
-      <button class="btn listb" @click="editor.chain().focus().toggleBulletList().run()">
-      <i class="fa-solid fa-list-ul"></i>
-    </button>
-    <button class="btn listn" @click="editor.chain().focus().toggleOrderedList().run()">
-      <i class="fa-solid fa-list-ol"></i>
-    </button>
-  <button class="btn undo" @click="editor.chain().focus().undo().run()">
-      <i class="fa-solid fa-rotate-left"></i>
-    </button>
-    <button class="btn redo" @click="editor.chain().focus().redo().run()">
-      <i class="fa-solid fa-rotate-right"></i>
-    </button>
+
 
     </div>
   </div>
@@ -130,27 +110,7 @@
 <div v-if="editorMod"
 editable: false>
 <div class="tapbuttons">
-    <button class="btn bold" @click="editor.chain().focus().toggleBold().run()">
-      <i class="fa-solid fa-bold"></i>
-    </button>
-     <button class="btn italic" @click="editor.chain().focus().toggleItalic().run()">
-    <i class="fa-solid fa-italic fa-1x"></i>
-    </button>
-    <button class="btn strike" @click="editor.chain().focus().toggleStrike().run()">
-      <i class="fa-solid fa-strikethrough"></i>
-    </button>
-      <button class="btn listb" @click="editor.chain().focus().toggleBulletList().run()">
-      <i class="fa-solid fa-list-ul"></i>
-    </button>
-    <button class="btn listn" @click="editor.chain().focus().toggleOrderedList().run()">
-      <i class="fa-solid fa-list-ol"></i>
-    </button>
-  <button class="btn undo" @click="editor.chain().focus().undo().run()">
-      <i class="fa-solid fa-rotate-left"></i>
-    </button>
-    <button class="btn redo" @click="editor.chain().focus().redo().run()">
-      <i class="fa-solid fa-rotate-right"></i>
-    </button>
+
 
     </div>
   </div>
@@ -187,7 +147,7 @@ editable: false>
               
               color="red"
               dark
-              v-bind:to="{name: 'edit-sections', params: {section_id : this.section_id}}"
+             type="submit"
             >
             <i class= "fa fa-unlock"> </i>
                Unlock
@@ -269,16 +229,18 @@ beforeRouteEnter(to, from, next) {
     })
 
         this.editorMod = new Editor({
+          
       extensions: [
         StarterKit,
       ],
       content: this.modification,
      
     })
+    
   },
 
   beforeUnmount() {
-    this.editor.destroy()
+     editorPolicy.setEditable(false)
   },
 
 
@@ -299,6 +261,7 @@ methods: {
                 this.policy = doc.data().policy
                 this.record = doc.data().record
                 this.modification = doc.data().modification
+                 this.sectiontitle = doc.data().sectiontitle
             })
         })
     },
