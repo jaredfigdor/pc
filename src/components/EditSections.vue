@@ -214,6 +214,7 @@ import StarterKit from '@tiptap/starter-kit'
 import Text from '@tiptap/extension-text'
 import db from './firebaseInit'
 import router from '../router'
+
 export default {
 components: {EditorContent,},
 name: 'edit-sections',
@@ -229,7 +230,7 @@ data () {
         active: null,
      section_id: null,
      name: null,
-     policy: null,
+     policy: '',
        editorMod: null,
      editorPolicy: null,
      section: null,
@@ -261,12 +262,14 @@ beforeRouteEnter(to, from, next) {
 },
 
 
-  mounted() {
+  async mounted() {
     this.editorPolicy = new Editor({
+      
       extensions: [
         StarterKit,
       ],
       content: this.policy,
+    
      
     })
 
@@ -281,6 +284,7 @@ beforeRouteEnter(to, from, next) {
 
   beforeUnmount() {
     this.editor.destroy()
+
   },
 
 
@@ -290,20 +294,21 @@ methods: {
 
  
     updateSection () {
+      const html = this.editorPolicy.getHTML()
         db.collection('volumes').where('section_id', '==', this.$route.params.section_id).get()
         .then(querySnapshot => {
             querySnapshot.forEach(doc => {
               doc.ref.update({
                 section_id: this.section_id,
-                name: this.name ,
-                policy: this.section,
+                name: this.name,
+                section: this.section,
                 status: this.status ,
                 sectiontitle: this.sectiontitle,
-                policy: this.policy,
+                policy: html,
                 islocked: this.islocked,
                 record: this.record,
-                modification: this.modification,
-                section: this.section
+                modification: this.modification
+         
               })
               .then(() => {
                 this.$router.push({name: 'home', params: {section_id: this.section_id}})
