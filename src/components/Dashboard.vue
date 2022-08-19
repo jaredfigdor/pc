@@ -99,7 +99,8 @@ created () {
                 'section_id': doc.data().section_id,
                 'sectiontitle': doc.data().sectiontitle,
                 'policy' : doc.data().policy,
-                'modification' : doc.data().modification
+                'modification' : doc.data().modification,
+                'islocked' : false
             }
            
             this.items[0]['items'].push(data)
@@ -128,12 +129,12 @@ methods: {
                 this.islocked = doc.data().islocked
                 this.modification = doc.data().modification
                 
+                
             
             })
         })
     },
        showSection (){
-       
      router.push({name: 'view-sections', params : {section_id: subItem.section_id}})
         
     }

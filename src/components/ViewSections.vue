@@ -14,31 +14,31 @@
 <form @submit.prevent="updateSection" class="col-s12">
 <div class="col s4">
     
-        <v-text-field disabled type="text" v-model="section_id" required></v-text-field>
-         <span class="helper-text">Section ID#</span>
+        <v-text-field label="Section ID#" disabled outlined v-model="section_id" required></v-text-field>
+
    
    
 </div>
 <div class="col s4">
     
-        <v-text-field input disabled type="text" v-model="status" required></v-text-field>
-         <span class="helper-text">Status</span>
+        <v-text-field label="Status" disabled outlined v-model="status" required></v-text-field>
+
     
    
 </div>
 
 <div class="row">
     <div class="col s4">
-        <v-text-field disabled type="text" v-model="record" required></v-text-field>
-         <span class="helper-text">Record #</span>
+        <v-text-field label="Record #" disabled outlined v-model="record" required></v-text-field>
+
 
     </div>
 </div>
 
 <div class="col s4">
     
-        <v-text-field disabled type="text" v-model="section" required></v-text-field>
-         <span class="helper-text">Section</span>
+        <v-text-field label="Section" disabled outlined v-model="section" required></v-text-field>
+
     
 
     
@@ -46,16 +46,16 @@
 </div>
 <div class="col s4">
     
-        <v-text-field disabled type="text" v-model="sectiontitle" required></v-text-field>
-         <span class="helper-text">Title</span>
+        <v-text-field label="Title" disabled outlined v-model="sectiontitle" required></v-text-field>
+
     
 
 </div>
 
 <div class="row">
     <div class="col s4">
-        <v-text-field disabled type="text" v-model="name" required></v-text-field>
-         <span class="helper-text">Name</span>
+        <v-text-field label="Name" disabled outlined v-model="name" required></v-text-field>
+
     </div>
 
 </div>
@@ -199,6 +199,7 @@ data () {
      status: null,
      sectiontitle: null,
      record: null,
+     islocked: true,
      modification: null
     }
 },
@@ -226,6 +227,7 @@ beforeRouteEnter(to, from, next) {
       extensions: [
         StarterKit,
       ],
+       editable: false,
       content: this.policy,
      
     })
@@ -235,6 +237,7 @@ beforeRouteEnter(to, from, next) {
       extensions: [
         StarterKit,
       ],
+       editable: false,
       content: this.modification,
      
     })
@@ -269,8 +272,9 @@ methods: {
     },
 
           updateSection (){
-       
+      this.islocked = false  
      router.push({name: 'edit-sections', params : {section_id : this.section_id}})
+     
         
     }
 
@@ -286,6 +290,7 @@ methods: {
 h5 {
   font-weight: 300;
   padding-top: 10px;
+  margin-top: -1px;
 
 
 }
@@ -301,11 +306,14 @@ h5 {
 #view-sections {
     text-align:center;
     justify-content: center;
-  
+     border-color: #1976D2;
+
 }
 
+
+
 form.col-s12 {
-    width: 1200px;
+    width: 1400px;
     margin-left: 200px;
     padding-right: 200px;
     margin-right: auto;
@@ -322,13 +330,7 @@ input {
     text-align: center;
 }
 
-label {
 
-    text-align: center;
-    padding-left: 185px;
-    font-size: larger;
-    font-weight: 700;
-}
 
 
 span {

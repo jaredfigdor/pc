@@ -12,31 +12,31 @@
 <form class="col-s12">
 <div class="col s4">
     
-        <v-text-field  type="text" v-model="section_id" required></v-text-field>
-         <span class="helper-text">Section ID#</span>
+        <v-text-field  label="Section ID#" outlined v-model="section_id" required></v-text-field>
+        
    
    
 </div>
 <div class="col s4">
     
-        <v-text-field input type="text" v-model="status" required></v-text-field>
-         <span class="helper-text">Status</span>
+        <v-text-field label="Status" outlined v-model="status" required></v-text-field>
+
     
    
 </div>
 
 <div class="row">
     <div class="col s4">
-        <v-text-field  type="text" v-model="record" required></v-text-field>
-         <span class="helper-text">Record #</span>
+        <v-text-field  label="Record #" outlined v-model="record" required></v-text-field>
+  
 
     </div>
 </div>
 
 <div class="col s4">
     
-        <v-text-field  type="text" v-model="section" required></v-text-field>
-         <span class="helper-text">Section</span>
+        <v-text-field label="Section" outlined v-model="section" required></v-text-field>
+
     
 
     
@@ -44,16 +44,15 @@
 </div>
 <div class="col s4">
     
-        <v-text-field  type="text" v-model="sectiontitle" required></v-text-field>
-         <span class="helper-text">Title</span>
+        <v-text-field  label="Title" outlined v-model="sectiontitle" required></v-text-field>
+
     
 
 </div>
 
 <div class="row">
     <div class="col s4">
-        <v-text-field  type="text" v-model="name" required></v-text-field>
-         <span class="helper-text">Name</span>
+        <v-text-field  label="Name" outlined v-model="name" required></v-text-field>
     </div>
 
 </div>
@@ -214,7 +213,7 @@ import StarterKit from '@tiptap/starter-kit'
 import Text from '@tiptap/extension-text'
 import db from './firebaseInit'
 import router from '../router'
-
+const Swal = require('sweetalert2')
 export default {
 components: {EditorContent,},
 name: 'edit-sections',
@@ -268,6 +267,7 @@ beforeRouteEnter(to, from, next) {
       extensions: [
         StarterKit,
       ],
+      autofocus: true,
       content: this.policy,
     
      
@@ -277,6 +277,7 @@ beforeRouteEnter(to, from, next) {
       extensions: [
         StarterKit,
       ],
+      autofocus: true,
       content: this.modification,
      
     })
@@ -291,6 +292,8 @@ beforeRouteEnter(to, from, next) {
 
 
 methods: {
+
+
 
  
     updateSection () {
@@ -312,7 +315,11 @@ methods: {
          
               })
               .then(() => {
-                this.$router.push({name: 'home', params: {section_id: this.section_id}})
+                Swal.fire({
+  title: 'Section Saved',
+  icon: 'success',
+  confirmButtonText: 'Continue'
+})
               })
             })
         })
@@ -339,15 +346,23 @@ methods: {
 <style>
 
 
+h5 {
+  padding-bottom: 20px;
+}
+
 .containment {
     display: flex;
     justify-content: center;
  
 }
 
+
 #view-sections {
     text-align:center;
     justify-content: center;
+    background-color: white;
+    box-shadow: 0px 0px 25px 1px #888888;
+    height: 700px
   
 }
 
@@ -360,6 +375,8 @@ form.col-s12 {
   
 }
 
+
+
 textarea {
     width: 550px;
     border:solid 1px green !important; 
@@ -369,18 +386,12 @@ input {
     text-align: center;
 }
 
-label {
 
-    text-align: center;
-    padding-left: 185px;
-    font-size: larger;
-    font-weight: 700;
-}
 
 
 span {
     
-    font-weight: 700;
+    font-weight: 500;
     
 }
 
