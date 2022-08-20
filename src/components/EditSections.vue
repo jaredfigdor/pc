@@ -172,25 +172,27 @@
 </div>
 
 <div class="buttons">
-<div class="col">
+  <div class="col">
             <v-btn to="/"
-              color="grey"
+              color="red"
               dark
             >
-              Back
+              Cancel 
             </v-btn>
           </div>
           <div class="col">
             <v-btn  
               
-              color="green"
+              color="blue"
               dark
-              @click="updateSection"
+              @click="saveSection"
             >
             <i class= "fa fa-unlock"> </i>
                Save
             </v-btn>
-          </div>
+            </div>
+     
+          
 
 
 
@@ -245,6 +247,8 @@ beforeRouteEnter(to, from, next) {
     .then(querySnapshot => {
         querySnapshot.forEach(doc => {
             next(vm => {
+
+              
                 vm.section_id = doc.data().section_id
                 vm.name = doc.data().name
                 vm.section = doc.data().section
@@ -253,6 +257,8 @@ beforeRouteEnter(to, from, next) {
                 vm.policy = doc.data().policy
                 vm.record = doc.data().record
                 vm.modification = doc.data().modification
+              
+              
                 
             })
         })
@@ -295,6 +301,22 @@ methods: {
 
 
 
+saveSection () {
+               Swal.fire({
+  title: 'Do you want to save the changes?',
+  showCancelButton: true,
+  confirmButtonText: 'Save',
+}).then((result) => {
+  /* Read more about isConfirmed, isDenied below */
+  if (result.isConfirmed) {
+    Swal.fire('Saved!', '', 'success')
+    this.updateSection() 
+  } else if (result.isDenied) {
+    Swal.fire('Changes are not saved', '', 'info')
+  }
+})
+},
+
  
     updateSection () {
       const html = this.editorPolicy.getHTML()
@@ -314,13 +336,7 @@ methods: {
                 modification: htmltwo
          
               })
-              .then(() => {
-                Swal.fire({
-  title: 'Section Saved',
-  icon: 'success',
-  confirmButtonText: 'Continue'
-})
-              })
+           
             })
         })
     },
@@ -356,6 +372,9 @@ h5 {
  
 }
 
+p {
+  text-align: justify;
+}
 
 #view-sections {
     text-align:center;
@@ -400,6 +419,21 @@ span {
 .buttons {
     padding-left: 375px;
 
+}
+
+.buttons .col {
+
+  padding-right: 0px;
+}
+
+.buttons .col {
+
+  padding-right: 0px;
+}
+
+i.material-icons {
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 button.btn.bold {

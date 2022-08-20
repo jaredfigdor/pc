@@ -72,7 +72,7 @@ import router from '../router'
         volume1: [],
         items: [
           {
-            title : 'Volume 1' ,
+            title : 'Administrative Policies' ,
            items: []
             
             
