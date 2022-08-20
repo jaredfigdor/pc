@@ -4,14 +4,14 @@
     <v-flex xs12 sm6 offset-sm3>
       <v-card>
         <v-toolbar color="teal" dark>
-          <v-app-bar-nav-icon></v-app-bar-nav-icon>
+          <v-app-bar-nav-icon>      <i class="fa-solid fa-search"></i></v-app-bar-nav-icon>
 
           <v-toolbar-title>Volumes</v-toolbar-title>
 
           <v-spacer></v-spacer>
 
-          <v-btn icon>
-            
+          <v-btn @click="addNewSection" color="#00BFA5">
+                  <i class="fa-solid fa-plus"></i>Add Section
           </v-btn>
         </v-toolbar>
 
@@ -78,7 +78,8 @@ import router from '../router'
             
             },
             {
-              title : 'Volume 2'
+              title : 'Anesthesia Policies',
+              items: []
             }
             
           
@@ -87,7 +88,7 @@ import router from '../router'
       }
     },
 created () {
-    db.collection('volumes').get().then(querySnapshot => {
+    db.collection('volumes').where('name', '==', "Administrative Policies").get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
             console.log(doc.data())
                       const data = {
@@ -107,8 +108,30 @@ created () {
            
             
         })
+    }),
+        db.collection('volumes').where('name', '==', "Anesthesia Policies").get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+            console.log(doc.data())
+                      const data = {
+                'id': doc.id,
+                'volumes': doc.data().volume,
+                'name': doc.data().name,
+                'section': doc.data().section,
+                'islocked': doc.data().islocked,
+                'section_id': doc.data().section_id,
+                'sectiontitle': doc.data().sectiontitle,
+                'policy' : doc.data().policy,
+                'modification' : doc.data().modification,
+                'islocked' : false
+            }
+           
+            this.items[1]['items'].push(data)
+           
+            
+        })
     })
 },
+
 
 watch: {
     '$route': 'showSection'
@@ -137,6 +160,11 @@ methods: {
        showSection (){
      router.push({name: 'view-sections', params : {section_id: subItem.section_id}})
         
+    },
+
+     addNewSection (){
+     router.push({name:'new-section'})
+        
     }
 }
 
@@ -148,5 +176,6 @@ methods: {
 v-layout.row {
   padding-top: 100 px;
 }
+
 
 </style>

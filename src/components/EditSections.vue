@@ -35,7 +35,7 @@
 
 <div class="col s4">
     
-        <v-text-field label="Section" outlined v-model="section" required></v-text-field>
+        <v-text-field label="Policy Section" outlined v-model="section" required></v-text-field>
 
     
 
@@ -44,7 +44,7 @@
 </div>
 <div class="col s4">
     
-        <v-text-field  label="Title" outlined v-model="sectiontitle" required></v-text-field>
+        <v-text-field  label="Policy Title" outlined v-model="sectiontitle" required></v-text-field>
 
     
 
@@ -52,7 +52,7 @@
 
 <div class="row">
     <div class="col s4">
-        <v-text-field  label="Name" outlined v-model="name" required></v-text-field>
+        <v-text-field  label="Volume Name" outlined v-model="name" required></v-text-field>
     </div>
 
 </div>

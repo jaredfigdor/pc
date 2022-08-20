@@ -1,27 +1,26 @@
 <template>
+
 <div class="containment">
-<div id ="view-sections">
-<div class="titlew">
+<div id ="new-section">
 
-
-    <h5 class="solid">  Section {{this.section_id}} - {{this.sectiontitle}}
+    <h5>  Section {{this.section_id}} : {{this.sectiontitle}}
 
 
 
     </h5>
-</div>
-<div class="row">
-<form @submit.prevent="updateSection" class="col-s12">
-<div class="col s4">
-    
-        <v-text-field label="Section ID#" disabled outlined v-model="section_id" required></v-text-field>
 
+<div class="row">
+<form class="col-s12">
+<div class="col s4">
+    
+        <v-text-field  label="Section ID#" outlined v-model="section_id" required></v-text-field>
+        
    
    
 </div>
 <div class="col s4">
     
-        <v-text-field label="Status" disabled outlined v-model="status" required></v-text-field>
+        <v-text-field label="Status" outlined v-model="status" required></v-text-field>
 
     
    
@@ -29,15 +28,15 @@
 
 <div class="row">
     <div class="col s4">
-        <v-text-field label="Record #" disabled outlined v-model="record" required></v-text-field>
-
+        <v-text-field  label="Record #" outlined v-model="record" required></v-text-field>
+  
 
     </div>
 </div>
 
 <div class="col s4">
     
-        <v-text-field label="Policy Section" disabled outlined v-model="section" required></v-text-field>
+        <v-text-field label="Policy Section" outlined v-model="section" required></v-text-field>
 
     
 
@@ -46,7 +45,7 @@
 </div>
 <div class="col s4">
     
-        <v-text-field label="Policy Title" disabled outlined v-model="sectiontitle" required></v-text-field>
+        <v-text-field  label="Policy Title" outlined v-model="sectiontitle" required></v-text-field>
 
     
 
@@ -54,8 +53,7 @@
 
 <div class="row">
     <div class="col s4">
-        <v-text-field label="Volume Name" disabled outlined v-model="name" required></v-text-field>
-
+        <v-text-field  label="Volume Name" outlined v-model="name" required></v-text-field>
     </div>
 
 </div>
@@ -69,7 +67,7 @@
       slider-color="blue"
     >
       <v-tab
-    
+      
        >
         Policy
 
@@ -77,7 +75,7 @@
          <v-tab
      
        >
-        modification
+        Modification
 
       </v-tab>
       <v-tab-item
@@ -89,7 +87,27 @@
 
 <div v-if="editorPolicy">
 <div class="tapbuttons">
-
+    <button class="btn bold" @click="editorPolicy.chain().focus().toggleBold().run()">
+      <i class="fa-solid fa-bold"></i>
+    </button>
+     <button class="btn italic" @click="editorPolicy.chain().focus().toggleItalic().run()">
+    <i class="fa-solid fa-italic fa-1x"></i>
+    </button>
+    <button class="btn strike" @click="editorPolicy.chain().focus().toggleStrike().run()">
+      <i class="fa-solid fa-strikethrough"></i>
+    </button>
+      <button class="btn listb" @click="editorPolicy.chain().focus().toggleBulletList().run()">
+      <i class="fa-solid fa-list-ul"></i>
+    </button>
+    <button class="btn listn" @click="editorPolicy.chain().focus().toggleOrderedList().run()">
+      <i class="fa-solid fa-list-ol"></i>
+    </button>
+  <button class="btn undo" @click="editorPolicy.chain().focus().undo().run()">
+      <i class="fa-solid fa-rotate-left"></i>
+    </button>
+    <button class="btn redo" @click="editorPolicy.chain().focus().redo().run()">
+      <i class="fa-solid fa-rotate-right"></i>
+    </button>
 
     </div>
   </div>
@@ -109,10 +127,29 @@
           
           <v-card-text>
 
-<div v-if="editorMod"
-editable: false>
+<div v-if="editorMod">
 <div class="tapbuttons">
-
+    <button class="btn bold" @click="editorMod.chain().focus().toggleBold().run()">
+      <i class="fa-solid fa-bold"></i>
+    </button>
+     <button class="btn italic" @click="editorMod.chain().focus().toggleItalic().run()">
+    <i class="fa-solid fa-italic fa-1x"></i>
+    </button>
+    <button class="btn strike" @click="editorMod.chain().focus().toggleStrike().run()">
+      <i class="fa-solid fa-strikethrough"></i>
+    </button>
+      <button class="btn listb" @click="editorMod.chain().focus().toggleBulletList().run()">
+      <i class="fa-solid fa-list-ul"></i>
+    </button>
+    <button class="btn listn" @click="editorMod.chain().focus().toggleOrderedList().run()">
+      <i class="fa-solid fa-list-ol"></i>
+    </button>
+  <button class="btn undo" @click="editorMod.chain().focus().undo().run()">
+      <i class="fa-solid fa-rotate-left"></i>
+    </button>
+    <button class="btn redo" @click="editorMod.chain().focus().redo().run()">
+      <i class="fa-solid fa-rotate-right"></i>
+    </button>
 
     </div>
   </div>
@@ -136,25 +173,27 @@ editable: false>
 </div>
 
 <div class="buttons">
-<div class="col">
+  <div class="col">
             <v-btn to="/"
-              color="grey"
+              color="red"
               dark
             >
-              Back
+              Cancel 
             </v-btn>
           </div>
           <div class="col">
             <v-btn  
               
-              color="red"
+              color="blue"
               dark
-             type="submit"
+              @click="saveSection"
             >
             <i class= "fa fa-unlock"> </i>
-               Unlock
+               Save
             </v-btn>
-          </div>
+            </div>
+     
+          
 
 
 
@@ -169,116 +208,99 @@ editable: false>
 
 
 
+
 </template>
 
 <script>
+import db from './firebaseInit'
 import { Editor, EditorContent } from '@tiptap/vue-2'
 import StarterKit from '@tiptap/starter-kit'
 import Text from '@tiptap/extension-text'
-import db from './firebaseInit'
 import router from '../router'
+const Swal = require('sweetalert2')
 export default {
 components: {EditorContent,},
-name: 'view-sections',
- props: {
-    value: {
-      type: String,
-      default: '',
-    },
-  },
+
+name: 'new-section',
 data () {
     return {
-      editor: null,
+            editor: null,
         active: null,
      section_id: null,
      name: null,
-     policy: null,
-     editorMod: null,
+     policy: '',
+       editorMod: null,
      editorPolicy: null,
      section: null,
      status: null,
+     islocked: null,
      sectiontitle: null,
      record: null,
-     islocked: true,
      modification: null
     }
 },
-beforeRouteEnter(to, from, next) {
-    db.collection('volumes').where('section_id','==', to.params.section_id).get()
-    .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-            next(vm => {
-                vm.section_id = doc.data().section_id
-                vm.name = doc.data().name
-                vm.section = doc.data().section
-                vm.status = doc.data().status
-                vm.sectiontitle = doc.data().sectiontitle
-                vm.policy = doc.data().policy
-                vm.record = doc.data().record
-                vm.modification = doc.data().modification
-                
-            })
-        })
-    })
-    
-},
-  mounted() {
+  async mounted() {
     this.editorPolicy = new Editor({
+      
       extensions: [
         StarterKit,
       ],
-       editable: false,
+      autofocus: true,
       content: this.policy,
+    
      
     })
 
         this.editorMod = new Editor({
-          
       extensions: [
         StarterKit,
       ],
-       editable: false,
+      autofocus: true,
       content: this.modification,
      
     })
-    
   },
 
   beforeUnmount() {
-     editorPolicy.setEditable(false)
+    this.editor.destroy()
+
   },
 
-
-watch: {
-    '$route': 'fetchData'
-},
-
 methods: {
-      fetchData () {
-        db.collection('volumes').where('section_id', '==', this.$route.params.section_id).get()
-        .then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-                this.section_id = doc.data().section_id
-                this.name = doc.data().name
-                this.section = doc.data().section
-                this.status = doc.data().status
-                this.title = doc.data().title
-                this.policy = doc.data().policy
-                this.record = doc.data().record
-                this.modification = doc.data().modification
-                 this.sectiontitle = doc.data().sectiontitle
-            })
-        })
-    },
 
-          updateSection (){
-      this.islocked = false  
-     router.push({name: 'edit-sections', params : {section_id : this.section_id}})
-     
-        
-    }
 
+    saveSection () {
+               Swal.fire({
+  title: 'Do you want to save the changes?',
+  showCancelButton: true,
+  confirmButtonText: 'Save',
+}).then((result) => {
+  /* Read more about isConfirmed, isDenied below */
+  if (result.isConfirmed) {
+    Swal.fire('Saved!', '', 'success')
+    this.saveNew() 
+  } else if (result.isDenied) {
+    Swal.fire('Changes are not saved', '', 'info')
+  }
+})
+},
+    saveNew() {
+              const html = this.editorPolicy.getHTML()
+      const htmltwo = this.editorMod.getHTML()
+        db.collection('volumes').add({
+    
+     section_id: this.section_id,
+     name: this.name,
+     policy: html,
+     section: this.section,
+     status: this.status,
+     sectiontitle: this.sectiontitle,
+     record: this.record,
+     modification: htmltwo
+        }).then(docRef => this.$router.push('/') )
+          
     }
+}
 
 }
 
@@ -287,15 +309,10 @@ methods: {
 
 <style>
 
+
 h5 {
-  font-weight: 300;
-  padding-top: 10px;
-  margin-top: -1px;
-
-
+  padding-bottom: 20px;
 }
-
-
 
 .containment {
     display: flex;
@@ -303,23 +320,29 @@ h5 {
  
 }
 
+p {
+  text-align: justify;
+}
+
 #view-sections {
     text-align:center;
     justify-content: center;
-     border-color: #1976D2;
-
+    background-color: white;
+    box-shadow: 0px 0px 25px 1px #888888;
+    height: 700px
+  
 }
 
-
-
 form.col-s12 {
-    width: 1400px;
+    width: 1200px;
     margin-left: 200px;
     padding-right: 200px;
     margin-right: auto;
     text-align: center;
   
 }
+
+
 
 textarea {
     width: 550px;
@@ -335,7 +358,7 @@ input {
 
 span {
     
-    font-weight: 700;
+    font-weight: 500;
     
 }
 
@@ -344,6 +367,21 @@ span {
 .buttons {
     padding-left: 375px;
 
+}
+
+.buttons .col {
+
+  padding-right: 0px;
+}
+
+.buttons .col {
+
+  padding-right: 0px;
+}
+
+i.material-icons {
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 button.btn.bold {

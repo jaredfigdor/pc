@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Dashboard from '../components/Dashboard.vue'
 import ViewSections from '../components/ViewSections.vue'
 import EditSections from '../components/EditSections.vue'
-
+import NewSection from '../components/NewSection.vue'
 
 Vue.use(VueRouter)
 
@@ -12,6 +12,11 @@ const routes = [
     path: '/',
     name: 'home',
     component: Dashboard
+  },
+  {
+    path: '/new',
+    name: 'new-section',
+    component: NewSection
   },
   {
     path: '/:section_id',
