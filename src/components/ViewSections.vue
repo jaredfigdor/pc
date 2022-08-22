@@ -199,7 +199,7 @@ data () {
      status: null,
      sectiontitle: null,
      record: null,
-     islocked: true,
+     islocked: null,
      modification: null
     }
 },
@@ -216,6 +216,7 @@ beforeRouteEnter(to, from, next) {
                 vm.policy = doc.data().policy
                 vm.record = doc.data().record
                 vm.modification = doc.data().modification
+                vm.islocked = doc.data().islocked
                 
             })
         })
@@ -267,12 +268,24 @@ methods: {
                 this.record = doc.data().record
                 this.modification = doc.data().modification
                  this.sectiontitle = doc.data().sectiontitle
+                 this.islocked = doc.data().islocked
             })
         })
     },
 
           updateSection (){
-      this.islocked = false  
+             db.collection('volumes').where('section_id', '==', this.$route.params.section_id).get()
+        .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              doc.ref.update({
+      
+                islocked: false,
+      
+         
+              })
+           
+            })
+        })
      router.push({name: 'edit-sections', params : {section_id : this.section_id}})
      
         

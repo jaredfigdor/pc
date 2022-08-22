@@ -173,9 +173,10 @@
 
 <div class="buttons">
   <div class="col">
-            <v-btn to="/"
+            <v-btn 
               color="red"
               dark
+              @click="changeLock"
             >
               Cancel 
             </v-btn>
@@ -257,7 +258,9 @@ beforeRouteEnter(to, from, next) {
                 vm.policy = doc.data().policy
                 vm.record = doc.data().record
                 vm.modification = doc.data().modification
-              
+                vm.islocked = doc.data().islocked
+             
+
               
                 
             })
@@ -268,6 +271,7 @@ beforeRouteEnter(to, from, next) {
 
 
   async mounted() {
+  
     this.editorPolicy = new Editor({
       
       extensions: [
@@ -311,11 +315,31 @@ saveSection () {
   if (result.isConfirmed) {
     Swal.fire('Saved!', '', 'success')
     this.updateSection() 
+    
   } else if (result.isDenied) {
     Swal.fire('Changes are not saved', '', 'info')
   }
 })
 },
+
+
+          changeLock (){
+             db.collection('volumes').where('section_id', '==', this.$route.params.section_id).get()
+        .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              doc.ref.update({
+      
+                islocked: true,
+      
+         
+              })
+           
+            })
+        })
+     router.push({name: 'home'})
+     
+        
+    },
 
  
     updateSection () {
@@ -331,7 +355,7 @@ saveSection () {
                 status: this.status ,
                 sectiontitle: this.sectiontitle,
                 policy: html,
-                islocked: this.islocked,
+                islocked: true,
                 record: this.record,
                 modification: htmltwo
          

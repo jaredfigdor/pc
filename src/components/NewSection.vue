@@ -317,6 +317,7 @@ h5 {
 .containment {
     display: flex;
     justify-content: center;
+    text-align: center;
  
 }
 
@@ -348,6 +349,8 @@ textarea {
     width: 550px;
     border:solid 1px green !important; 
 }
+
+
 
 input {
     text-align: center;

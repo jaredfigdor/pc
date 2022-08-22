@@ -10,7 +10,7 @@
 
           <v-spacer></v-spacer>
 
-          <v-btn @click="addNewSection" color="#00BFA5">
+          <v-btn @click="addNewSection" color="#00897B">
                   <i class="fa-solid fa-plus"></i>Add Section
           </v-btn>
         </v-toolbar>
